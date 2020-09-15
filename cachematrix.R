@@ -3,14 +3,16 @@
 ## of the matrix; 3) set the value of the inverse (using the solve function) 
 ## and 4) get the value of the inverse. 
 
+#Define matrix
 makeMatrix <- function(x = matrix()) {
         m <- NULL
         set <- function(y) {
                 x <<- y
                 m <<- NULL
         }
+        
         get <- function() x
-        setinv <- function(solve) m <<- mean
+        setinv <- function(solve) m <<- solve
         getinv <- function() m
         list(set = set, get = get,
              setinv = setinv,
@@ -24,11 +26,13 @@ makeMatrix <- function(x = matrix()) {
 ## the value of the inverse in the cache via the setmean function.
 
 cacheinverse <- function(x, ...) {
+       #Check if the inverse is already calculated
         m <- x$getinv()
         if(!is.null(m)) {
                 message("getting cached data")
                 return(m)
         }
+        #Calculate matrix inverse, call the solve function
         data <- x$get()
         m <- solve(data, ...)
         x$setinv(m)
